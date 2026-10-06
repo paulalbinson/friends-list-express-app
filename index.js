@@ -111,10 +111,11 @@ const PORT =5000;
 
 app.use("/friends", routes);
 
-app.listen(PORT,()=>console.log("Server is running"));
-// Tell PM2 this specific worker is fully booted and safe to handle     
-// traffic
-if (process.send) {
-    process.send('ready');
-}
-
+app.listen(PORT,()=>{
+    console.log("Server is running");
+     
+    // Tell PM2 this specific worker is fully booted and safe to handle traffic
+    if (process.send) {
+        process.send('ready');
+    }
+});
