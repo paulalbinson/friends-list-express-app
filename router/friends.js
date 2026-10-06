@@ -30,7 +30,7 @@ router.post("/", (req, res) => {
         friends[req.body.email] = {
             "firstName": req.body.firstName,
             "lastName": req.body.lastName,
-            "DOB": req.body.DOB,            
+            "DOB": req.body.DOB,
         };
     }
     // Send response indicating user addition
@@ -46,12 +46,12 @@ router.put("/:email", (req, res) => {
         let DOB = req.body.DOB;
         let firstName = req.body.firstName;
         let lastName = req.body.lastName;
-        
+
         // Update DOB if provided in request body
         if (DOB) {
             friend["DOB"] = DOB;
         }
-        
+
         // Update firstName if provided in request body
         if (firstName) {
             friend["firstName"] = firstName;
@@ -60,7 +60,7 @@ router.put("/:email", (req, res) => {
         if (lastName) {
             friend["lastName"] = lastName;
         }
-        
+
         friends[email] = friend;  // Update friend details in 'friends' object
         res.send(`Friend with the email ${email} updated.`);
     } else {

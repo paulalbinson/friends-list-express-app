@@ -36,9 +36,9 @@ const authenticatedUser = (username, password) => {
 const app = express();
 
 // CRITICAL: Tells Express to trust Nginx's proxy headers - Remove this if you aren't using a nginx proxy setup.
-app.set('trust proxy', true); 
+app.set('trust proxy', true);
 
-app.use(session({secret:"fingerprint", resave: true, saveUninitialized: true}));
+app.use(session({secret: "fingerprint", resave: true, saveUninitialized: true}));
 
 app.use(express.json());
 
@@ -54,11 +54,11 @@ app.use("/friends", function auth(req, res, next) {
                 req.user = user;
                 next(); // Proceed to the next middleware
             } else {
-                return res.status(403).json({ message: "User not authenticated" });
+                return res.status(403).json({message: "User not authenticated"});
             }
         });
     } else {
-        return res.status(403).json({ message: "User not logged in" });
+        return res.status(403).json({message: "User not logged in"});
     }
 });
 
@@ -69,7 +69,7 @@ app.post("/login", (req, res) => {
 
     // Check if username or password is missing
     if (!username || !password) {
-        return res.status(404).json({ message: "Error logging in" });
+        return res.status(404).json({message: "Error logging in"});
     }
 
     // Authenticate user
@@ -77,7 +77,7 @@ app.post("/login", (req, res) => {
         // Generate JWT access token
         let accessToken = jwt.sign({
             data: password
-        }, 'access', { expiresIn: 60 * 60 });
+        }, 'access', {expiresIn: 60 * 60});
 
         // Store access token and username in session
         req.session.authorization = {
@@ -85,7 +85,7 @@ app.post("/login", (req, res) => {
         }
         return res.status(200).send("User successfully logged in");
     } else {
-        return res.status(208).json({ message: "Invalid Login. Check username and password" });
+        return res.status(208).json({message: "Invalid Login. Check username and password"});
     }
 });
 
@@ -114,9 +114,9 @@ const PORT = 3001; // Change to whatever works best for you
 
 app.use("/friends", routes);
 
-app.listen(PORT,()=>{
+app.listen(PORT, () => {
     console.log("Server is running");
-     
+
     // Tell PM2 this specific worker is fully booted and safe to handle traffic - Remove this if the app isn't managed by PM2
     if (process.send) {
         process.send('ready');
