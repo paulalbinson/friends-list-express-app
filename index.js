@@ -110,7 +110,7 @@ app.post("/register", (req, res) => {
 });
 
 
-const PORT =5000;
+const PORT = 3001; // Change to whatever works best for you
 
 app.use("/friends", routes);
 
