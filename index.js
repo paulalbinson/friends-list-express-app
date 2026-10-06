@@ -1,9 +1,9 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const session = require('express-session')
-const routes = require('./router/friends.js')
+const session = require('express-session');
+const routes = require('./router/friends.js');
 
-let users = []
+let users = [];
 
 // Check if a user with the given username already exists
 const doesExist = (username) => {
@@ -34,6 +34,9 @@ const authenticatedUser = (username, password) => {
 }
 
 const app = express();
+
+// CRITICAL: Tells Express to trust Nginx's proxy headers - Remove this if you aren't using a nginx proxy setup.
+app.set('trust proxy', true); 
 
 app.use(session({secret:"fingerprint", resave: true, saveUninitialized: true}));
 
@@ -114,7 +117,7 @@ app.use("/friends", routes);
 app.listen(PORT,()=>{
     console.log("Server is running");
      
-    // Tell PM2 this specific worker is fully booted and safe to handle traffic
+    // Tell PM2 this specific worker is fully booted and safe to handle traffic - Remove this if the app isn't managed by PM2
     if (process.send) {
         process.send('ready');
     }
