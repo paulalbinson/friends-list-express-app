@@ -35,7 +35,7 @@ const authenticatedUser = (username, password) => {
 
 const app = express();
 
-app.use(session({secret:"fingerprint"},resave=true,saveUninitialized=true));
+app.use(session({secret:"fingerprint", resave: true, saveUninitialized: true}));
 
 app.use(express.json());
 
